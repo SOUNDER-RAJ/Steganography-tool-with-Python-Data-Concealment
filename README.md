@@ -1,6 +1,4 @@
-Delve into the fascinating world of steganography, the practice of 
-hiding messages within plain sight, with my Python project. 
-Utilizing the least significant bit (LSB) technique, I've crafted a 
+ Utilizing the least significant bit (LSB) technique, I've crafted a 
 script that seamlessly embeds encrypted text into an image file, 
 rendering the message invisible to the naked eye.
 
