@@ -14,7 +14,7 @@ def embed_text_in_image(image_path, text, passphrase, output_path):
     img = img.convert('RGB')
     encoded_img = np.array(img)
 
-    width, height, _ = encoded_img.shape
+    height, width, _ = encoded_img.shape
     binary_text = ''.join(format(ord(char), '08b') for char in encrypted_text)
     binary_text += '1111111111111110'  # Delimiter to indicate end of text
 
@@ -41,7 +41,7 @@ def extract_decrypt_text_from_image(image_path, passphrase):
     img = img.convert('RGB')
     encoded_img = np.array(img)
 
-    width, height, _ = encoded_img.shape
+    height, width, _ = encoded_img.shape
     binary_text = ''
 
     for y in range(height):
@@ -70,7 +70,7 @@ def run():
     operation = input("Do you want to encrypt or decrypt the image? (Enter 'encrypt' or 'decrypt'): ")
 
     if operation.lower() == 'encrypt':
-        input_image_path = input("Enter the path to the image file: ")
+        input_image_path = input("Enter the path to the input image: ")
         text_file_path = input("Enter the path to the text file containing the message: ")
 
         with open(text_file_path, 'r') as file:
@@ -80,12 +80,11 @@ def run():
         embed_text_in_image(input_image_path, embedded_text, passphrase, output_image_path)
 
     elif operation.lower() == 'decrypt':
-        input_image_path = input("Enter the path to the image file: ")
+        input_image_path = input("Enter the path to the input image: ")
         extract_decrypt_text_from_image(input_image_path, passphrase)
 
     else:
         print("Invalid operation. Please enter 'encrypt' or 'decrypt'.")
 
 # Run the script
-if __name__ == "__main__":
-    run()
+run()
