@@ -1,6 +1,6 @@
 from PIL import Image
-from google.colab import files
 import numpy as np
+from google.colab import files
 
 # XOR encryption/decryption function
 def xor_encrypt_decrypt(text, passphrase):
@@ -15,7 +15,7 @@ def embed_text_in_image(image_path, text, passphrase, output_path):
     img = img.convert('RGB')
     encoded_img = np.array(img)
 
-    width, height, _ = encoded_img.shape
+    height, width, _ = encoded_img.shape
     binary_text = ''.join(format(ord(char), '08b') for char in encrypted_text)
     binary_text += '1111111111111110'  # Delimiter to indicate end of text
 
@@ -43,7 +43,7 @@ def extract_decrypt_text_from_image(image_path, passphrase):
     img = img.convert('RGB')
     encoded_img = np.array(img)
 
-    width, height, _ = encoded_img.shape
+    height, width, _ = encoded_img.shape
     binary_text = ''
 
     for y in range(height):
@@ -64,7 +64,7 @@ def extract_decrypt_text_from_image(image_path, passphrase):
     extracted_text_path = "extracted_text.txt"
     with open(extracted_text_path, "w") as file:
         file.write(decrypted_text)
-
+    print(f"Decrypted text saved to {extracted_text_path}.")
     files.download(extracted_text_path)
 
 # Main function to handle encryption and decryption
@@ -75,11 +75,11 @@ def run():
     if operation.lower() == 'encrypt':
         print("Upload the image file:")
         uploaded_image = files.upload()
-        input_image_path = list(uploaded_image.keys())[0]
+        input_image_path = next(iter(uploaded_image))  # Get the first uploaded file
 
-        print("Upload the text file containing the message:")
-        uploaded_text = files.upload()
-        text_file_path = list(uploaded_text.keys())[0]
+        print("Upload the text file:")
+        uploaded_text_file = files.upload()
+        text_file_path = next(iter(uploaded_text_file))  # Get the first uploaded text file
 
         with open(text_file_path, 'r') as file:
             embedded_text = file.read()
@@ -90,7 +90,7 @@ def run():
     elif operation.lower() == 'decrypt':
         print("Upload the image file:")
         uploaded_image = files.upload()
-        input_image_path = list(uploaded_image.keys())[0]
+        input_image_path = next(iter(uploaded_image))  # Get the first uploaded file
 
         extract_decrypt_text_from_image(input_image_path, passphrase)
 
